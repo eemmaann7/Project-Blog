@@ -27,15 +27,6 @@ app.use(passUserToView)
 
 
 
-
-
-
-
-
-
-
-
-
 async function connectToDB(){ //connection to the database
     try{
         await mongoose.connect(process.env.MONGODB_URI)
@@ -46,18 +37,7 @@ async function connectToDB(){ //connection to the database
     }
 }
 
-
 connectToDB() // connect to database
-
-
-
-
-
-
-
-
-
-
 
 
 
