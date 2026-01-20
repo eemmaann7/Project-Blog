@@ -12,8 +12,12 @@ const postSchema = new mongoose.Schema({
         required: true
     },
     auther: {
+        type: mongoose.Types.ObjectId,
+        ref: 'usernmae'
     },
     catagory: {
+        type: mongoose.Types.ObjectId,
+        ref: 'catagory'
     } 
 })
 

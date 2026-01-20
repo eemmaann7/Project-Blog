@@ -1,10 +1,14 @@
 <div>
     <% if (user){ %>
+        <!-- logged in users can see -->
     <a href="/auth/sign-out">Logout</a>
+    <a href="/catagory">catagory</a>
 
     <% } else{ %>
+        <!-- logged out users can see -->
     <a href="/auth/sign-up">Sign up</a>
     <a href="/auth/sign-in">Login</a>
 
     <% } %>
+    <!-- everyone can see -->
 </div>
