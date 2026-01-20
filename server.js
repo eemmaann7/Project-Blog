@@ -50,7 +50,7 @@ connectToDB() // connect to database
 // Routes go here
 app.use('/auth',authController)
 app.use('/',indexController)
-app.use('/post', postContoroller)
+app.use('/posts', postContoroller)
 app.use('/catagory', catagoryContoroller)
 
 

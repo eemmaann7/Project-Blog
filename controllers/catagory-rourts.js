@@ -4,6 +4,8 @@ const Catagory = require('../models/Catagory')
 const Comment = require('../models/Comment')
 const User = require('../models/user')
 
-
+router.get('/',(req,res)=>{
+    res.render('catagory/catagory.ejs')
+})
 
 module.exports = router
