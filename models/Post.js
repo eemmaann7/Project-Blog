@@ -18,7 +18,7 @@ const postSchema = new mongoose.Schema({
 })
 
 // Model
-const Post = mongoose.model('Post',PostSchema)
+const Post = mongoose.model('Post',postSchema)
 
 // Anytime in express we want to export
 module.exports = Post
