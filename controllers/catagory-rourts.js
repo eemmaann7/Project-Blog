@@ -4,8 +4,17 @@ const Catagory = require('../models/Catagory')
 const Comment = require('../models/Comment')
 const User = require('../models/User')
 
-router.get('/',(req,res)=>{
-    res.render('catagory/catagory.ejs')
+
+// GET all categories
+router.get('/', async (req, res)=>{
+  try{
+    const categories = await Catagory.find().populate('catagory')
+    res.render('catagory/catagory.ejs', { categories })
+  } catch (err) {
+    console.error(err)
+    res.send('Error loading categories')
+  }
 })
+
 
 module.exports = router

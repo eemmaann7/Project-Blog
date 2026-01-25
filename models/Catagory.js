@@ -5,11 +5,12 @@ const mongoose = require('mongoose')
 const catagorySchema = new mongoose.Schema({
     catagory: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     discription:{
         trype: String
-    }
+    }, timestamps: true
 })
 
 // Model
