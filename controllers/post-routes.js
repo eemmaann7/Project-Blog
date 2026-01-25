@@ -27,6 +27,25 @@ router.post('/', async (req,res)=>{
     }
 })
 
+router.get('/:id', async(req,res)=>{
+  const foudPost = await Post.findById(req.params.id)
+  res.render('posts/post-details.ejs', {post: foundPost})
+})
+
+router.post('/:id/delete', async(req, res)=>{
+  if(!req.session.user) {
+    return res.redirect('/auth/sign-in')
+  }
+  try{
+    await Post.findByIdAndDelete(req.params.id)
+    res.redirect('/posts')
+  } catch(err){
+    console.log(err)
+  }
+})
+
+
+
 
 
 

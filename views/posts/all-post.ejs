@@ -12,6 +12,10 @@
 
     <% allPost.forEach((onePost)=>{ %>
         <p><%= onePost.postTitle %></p>
+        <form action="/posts/<%= onePost._id %>/delete" method="POST">
+            <button type="submit">Delete</button>
+        </form>
+        <a href="/posts/<% onePost._id%>">See Details</a>
     <% }) %>
 
 </body>
