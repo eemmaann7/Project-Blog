@@ -29,7 +29,7 @@ router.post('/', async (req,res)=>{
 
 router.get('/:id', async(req,res)=>{
   const foudPost = await Post.findById(req.params.id)
-  res.render('posts/post-details.ejs', {post: foundPost})
+  res.render('posts/post-details.ejs', {post: foudPost})
 })
 
 router.post('/:id/delete', async(req, res)=>{
