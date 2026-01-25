@@ -10,21 +10,21 @@ router.get('/',async (req,res)=>{
     res.render('posts/all-post.ejs', {allPost:allPost}) 
 })
 
+
 router.get('/new',(req,res)=>{
     if(!req.session.user){
         return res.redirect('/auth/sign-in')
     }
-    res.render('posts/create-post.ejs')
+    res.render('posts/create-post.ejs') // shows create form
 })
 router.post('/', async (req,res)=>{
     try{
-    const createdPost = await Post.create(req.body)
-    res.redirect('/posts')
+    const createdPost = await Post.create(req.body) // create the post
+    res.redirect('/posts') 
     }
     catch(err){
         console.log(err)
     }
-
 })
 
 
