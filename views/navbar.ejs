@@ -1,14 +1,15 @@
 <div>
-    <% if (user){ %>
+    <!-- everyone can see -->
+     <a href="/">Home Page</a>
+     <a href="/posts">All Posts</a>
+     <% if (user){ %>
         <!-- logged in users can see -->
          <a href="/auth/sign-out">Logout</a>
          <a href="/catagory">catagory</a>
          <a href="/posts/new">Create Post</a>
-    <% } else{ %>
-        <!-- logged out users can see -->
-         <a href="/auth/sign-up">Sign up</a>
-         <a href="/auth/sign-in">Login</a>
+         <% } else{ %>
+            <!-- logged out users can see -->
+             <a href="/auth/sign-up">Sign up</a>
+             <a href="/auth/sign-in">Login</a>
     <% } %>
-    <!-- everyone can see -->
-     <a href="/posts">All Posts</a>
 </div>
