@@ -6,34 +6,40 @@ const User = require('../models/User')
 
 
 router.get('/',async (req,res)=>{
-    const allPost = await Post.find() // gets all the posts
+    const allPost = await Post.find().populate('author') // gets all the posts
     res.render('posts/all-post.ejs', {allPost:allPost}) 
 })
 
 
 router.get('/new',(req,res)=>{
-    if(!req.session.user){
+    if(!req.session.user){ // shows create form
         return res.redirect('/auth/sign-in')
-    }
-    res.render('posts/create-post.ejs') // shows create form
+    } 
+    res.render('posts/create-post.ejs') 
 })
 router.post('/', async (req,res)=>{
-    try{
-    const createdPost = await Post.create(req.body) // create the post
-    res.redirect('/posts') 
-    }
-    catch(err){
-        console.log(err)
-    }
+  if(!req.session.user){
+    return res.redirect('/auth/sign-in')
+  } try{
+    await Post.create({
+    postTitle: req.body.postTitle,
+    content: req.body.content,
+    author: req.session.user._id
+    })
+    res.redirect('/posts')
+  } catch(err){
+    console.log(err)
+  }
 })
 
-router.get('/:id', async(req,res)=>{
-  const foudPost = await Post.findById(req.params.id)
+
+router.get('/:id', async(req,res)=>{ //get post details
+  const foudPost = await Post.findById(req.params.id).populate('catagory')
   res.render('posts/post-details.ejs', {post: foudPost})
 })
 
 router.post('/:id/delete', async(req, res)=>{
-  if(!req.session.user) {
+  if(!req.session.user) { //delete the post
     return res.redirect('/auth/sign-in')
   }
   try{

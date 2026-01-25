@@ -11,14 +11,15 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    auther: {
+    author: {
         type: mongoose.Types.ObjectId,
-        ref: 'usernmae'
+        ref: 'User',
+        required: true
     },
     catagory: {
         type: mongoose.Types.ObjectId,
-        ref: 'catagory'
-    } 
+        ref: 'Catagory'
+    }
 })
 
 // Model
