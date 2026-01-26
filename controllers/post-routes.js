@@ -13,7 +13,6 @@ router.get('/',async (req,res)=>{
   }
 })
 
-
 router.get('/new',(req,res)=>{
     if(!req.session.user){ // shows create form
         return res.redirect('/auth/sign-in')
@@ -39,11 +38,12 @@ router.post('/', async (req,res)=>{
 
 
 router.get('/:id', async(req,res)=>{ //get post details
-  const foundPost = await Post.findById(req.params.id)
+  const foundPost = await Post.findById(req.params.id).populate('author')
   res.render('posts/post-details.ejs', {post: foudPost})
+  res.redirect('/posts')
 })
 
-router.post('/:id/delete', async(req, res)=>{
+router.post('/:id/delete',async(req, res)=>{
   if(!req.session.user) { //delete the post
     return res.redirect('/auth/sign-in')
   }
@@ -52,12 +52,12 @@ router.post('/:id/delete', async(req, res)=>{
     res.redirect('/posts')
   } catch(err){
     console.log(err)
+    res.redirect('/posts')
   }
 })
 
-
 router.get('/:id/edit', async(req,res)=>{
-  if (!req.session.user) {
+  if (!req.session.user) { //show edit form
     return res.redirect('/auth/sign-in')
   }
   const foundPost = await Post.findById(req.params.id)
@@ -65,7 +65,7 @@ router.get('/:id/edit', async(req,res)=>{
 })
 
 router.post('/:id/edit',async(req,res)=>{
-  if (!req.session.user) {
+  if (!req.session.user) { // updates the post
     return res.redirect('/auth/sign-in')
   }
   try {
@@ -76,6 +76,7 @@ router.post('/:id/edit',async(req,res)=>{
     res.redirect('/posts', +req.params.id)
   } catch (err) {
     console.log(err)
+    res.redirect('posts')
   }
 })
 
