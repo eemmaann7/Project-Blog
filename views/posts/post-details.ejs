@@ -11,8 +11,8 @@
     <p>Title: <%= post.postTitle %></p>
     <p>content: <%= post.content %></p>
     <p>author: <%= post.author.username %></p>
-    <p>Catagory: <%= post.catagory %></p>
     <p>puplished:</p>
+    <a href="/posts/<%= post._id %>/edit">Edit</a>
 
     <a href="/posts">Go back to all posts</a>
 </body>

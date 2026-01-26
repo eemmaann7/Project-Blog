@@ -20,7 +20,7 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Catagory'
     }
-})
+}, {timestamps:true})
 
 // Model
 const Post = mongoose.model('Post',postSchema)
