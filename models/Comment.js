@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 // Schema
 
 const commentSchema = new mongoose.Schema({
-    text: {
+    content: {
         type: String,
         required: true
     },
@@ -12,12 +12,12 @@ const commentSchema = new mongoose.Schema({
         ref: 'Post',
         required: true
     },
-    user:{
+    author:{
         type: mongoose.Types.ObjectId,
         ref: 'User',
         required: true
     }
-})
+}, {timestamps:true})
 
 // Model
 const Comment = mongoose.model('Comment',commentSchema)

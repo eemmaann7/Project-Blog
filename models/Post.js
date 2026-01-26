@@ -16,10 +16,10 @@ const postSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    catagory: {
+    comment: [{
         type: mongoose.Types.ObjectId,
-        ref: 'Catagory'
-    }
+        ref: 'Comment'
+    }]
 }, {timestamps:true})
 
 // Model

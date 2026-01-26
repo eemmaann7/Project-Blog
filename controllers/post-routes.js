@@ -39,7 +39,9 @@ router.post('/', async (req,res)=>{
 
 router.get('/:id', async(req,res)=>{ //get post details
   const foundPost = await Post.findById(req.params.id).populate('author')
-  res.render('posts/post-details.ejs', {post: foudPost})
+  const comments = await Comment.find({ post: req.params.id }).populate('author')
+
+  res.render('posts/post-details.ejs', {post: foudPost , comments: comments})
   res.redirect('/posts')
 })
 
