@@ -1,35 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Details</title>
 </head>
 <body>
-    <%- include('../navbar') %>
-    <h1>Post Details</h1>
-    <p>Title: <%= post.postTitle %></p>
-    <p>content: <%= post.content %></p>
-    <p>author: <%= post.author.username %></p>
-    <p>puplished:</p>
-    <a href="/posts/<%= post._id %>/edit">Edit</a>
-    <h2>Comments</h2>
-    <% comments.forEach((oneComment)=>{ %>
-  <p>
-    <%= oneComment.author.username %>:
-    <%= oneComment.content %>
-  </p>
-<% }) %>
 
+  <%- include('../navbar') %>
 
-<% if (req.session.user){ %>
-<h3>Add ur comment</h3>
-<form action="/posts/<%= post._id %>/comments" method="POST">
-  <textarea name="content" required></textarea>
-  <button>Add</button>
-</form>
+  <h1>Post Details</h1>
+
+  <p>Title: <%= post.postTitle %></p>
+  <p>Content: <%= post.content %></p>
+  <p>Author: <%= post.author.username %></p>
+
+<% if (
+  req.session.user &&
+  post.author &&
+  post.author._id.equals(req.session.user._id)
+) { %>
+  <a href="/posts/<%= post._id %>/edit">Edit Post</a>
 <% } %>
-<br>
-    <a href="/posts/">Go back to all posts</a>
+
+
+  <hr>
+
+  <h2>Comments</h2>
+
+  <% if (!comments || comments.length === 0) { %>
+    <p>No comments yet.</p>
+  <% } else { %>
+    <% comments.forEach((oneComment) => { %>
+      <div style="margin-bottom:10px;">
+
+        <strong><%= oneComment.author.username %></strong> :
+        <%= oneComment.content %>
+
+        <% if (
+          req.session.user &&
+          oneComment.author &&
+          oneComment.author._id.equals(req.session.user._id)
+        ) { %>
+
+          <!-- ✏️ Edit -->
+          <a href="/comments/<%= oneComment._id %>/edit/<%= post._id %>">
+            Edit
+          </a>
+
+          <!-- 🗑 Delete -->
+          <form
+            action="/comments/<%= oneComment._id %>/delete/<%= post._id %>"
+            method="POST"
+            style="display:inline;"
+          >
+            <button type="submit">Delete</button>
+          </form>
+
+        <% } %>
+
+      </div>
+    <% }) %>
+
+  <% } %>
+
+  <hr>
+
+  <% if (req.session.user) { %>
+
+    <h3>Add your comment</h3>
+
+    <form action="/comments/posts/<%= post._id %>" method="POST">
+      <textarea name="content" required></textarea>
+      <br>
+      <button type="submit">Add</button>
+    </form>
+
+  <% } %>
+
+  <br>
+
+  <a href="/posts/">Go back to all posts</a>
+
 </body>
 </html>

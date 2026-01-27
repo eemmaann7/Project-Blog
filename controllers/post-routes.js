@@ -56,6 +56,11 @@ router.get('/:id/edit', async(req,res)=>{
     return res.redirect('/auth/sign-in')
   }
   const foundPost = await Post.findById(req.params.id).populate('author')
+  
+  if (!foundPost.author._id.equals(req.session.user._id)) {
+    return res.redirect('/posts/' + req.params.id)
+  }
+
   res.render('posts/edit-post.ejs', { post: foundPost })
 })
 
@@ -63,12 +68,16 @@ router.post('/:id/edit',async(req,res)=>{
   if (!req.session.user) { // updates the post
     return res.redirect('/auth/sign-in')
   }
+  const foundPost = await Post.findById(req.params.id)
+  if (!foundPost.author.equals(req.session.user._id)) {
+    return res.redirect('/posts/' + req.params.id)
+  }
   try {
     await Post.findByIdAndUpdate(req.params.id,{
       postTitle: req.body.postTitle,
       content: req.body.content
     })
-    res.redirect('/posts/', +req.params.id)
+    res.redirect('/posts/'+req.params.id)
   } catch (err) {
     console.log(err)
     res.redirect('/posts')
@@ -77,7 +86,7 @@ router.post('/:id/edit',async(req,res)=>{
 
 
 
-router.get('/:id', async(req,res)=>{
+router.get('/:id/', async(req,res)=>{
   try {
     const foundPost = await Post.findById(req.params.id)
       .populate('author')
@@ -101,19 +110,19 @@ router.post('/:id/comments',async(req,res)=>{
   if(!req.session.user)
     return res.redirect('/auth/sign-in')
   try{
-    const postId = req.params.id
+    const postId = req.params.id 
     const comment = await Comment.create({
       content: req.body.content,
       author: req.session.user._id,
       post: postId
     })
-    await Post.findByIdAndUpdate(postId, {
-      $push: { comments: comment._id }
-    })
-    res.redirect('/posts/',+ postId )
-  } catch (err) {
+    const post = await Post.findById(postId)
+    post.comments.push(comment._id)
+    await post.save()
+    res.redirect('/posts/'+ postId )
+  } catch(err){
     console.log(err)
-    res.redirect('/posts/posts-details',+ req.params.id)
+    res.redirect('/posts')
   }
 })
 
