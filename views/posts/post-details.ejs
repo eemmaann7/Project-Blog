@@ -14,9 +14,14 @@
     <p>puplished:</p>
     <a href="/posts/<%= post._id %>/edit">Edit</a>
     <h2>Comments</h2>
-    <% comments.forEach((oneComment){ %>
-        <p><%=comment.author.username %>: <%=comment.content %></p>
+    <% comments.forEach((oneComment)=>{ %>
+  <p>
+    <%= oneComment.author.username %>:
+    <%= oneComment.content %>
+  </p>
 <% }) %>
+
+
 <% if (req.session.user){ %>
 <h3>Add ur comment</h3>
 <form action="/posts/<%= post._id %>/comments" method="POST">
@@ -25,6 +30,6 @@
 </form>
 <% } %>
 <br>
-    <a href="/posts">Go back to all posts</a>
+    <a href="/posts/">Go back to all posts</a>
 </body>
 </html>

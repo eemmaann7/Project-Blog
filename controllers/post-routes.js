@@ -6,10 +6,10 @@ const User = require('../models/User')
 
 router.get('/',async (req,res)=>{
   try{
-    const allPost = await Post.find().populate('athuor') // gets all the posts
+    const allPost = await Post.find().populate('author') // gets all the posts
     res.render('posts/all-post.ejs', {allPost:allPost})
   } catch(err){
-    cosole.log(err)
+    console.log(err)
   }
 })
 
@@ -30,20 +30,13 @@ router.post('/', async (req,res)=>{
     content: req.body.content,
     author: req.session.user._id
     })
-    res.redirect('/posts')
+    res.redirect('/posts/new')
   } catch(err){
     console.log(err)
   }
 })
 
 
-router.get('/:id', async(req,res)=>{ //get post details
-  const foundPost = await Post.findById(req.params.id).populate('author')
-  const comments = await Comment.find({ post: req.params.id }).populate('author')
-
-  res.render('posts/post-details.ejs', {post: foudPost , comments: comments})
-  res.redirect('/posts')
-})
 
 router.post('/:id/delete',async(req, res)=>{
   if(!req.session.user) { //delete the post
@@ -62,7 +55,7 @@ router.get('/:id/edit', async(req,res)=>{
   if (!req.session.user) { //show edit form
     return res.redirect('/auth/sign-in')
   }
-  const foundPost = await Post.findById(req.params.id)
+  const foundPost = await Post.findById(req.params.id).populate('author')
   res.render('posts/edit-post.ejs', { post: foundPost })
 })
 
@@ -75,10 +68,52 @@ router.post('/:id/edit',async(req,res)=>{
       postTitle: req.body.postTitle,
       content: req.body.content
     })
-    res.redirect('/posts', +req.params.id)
+    res.redirect('/posts/', +req.params.id)
   } catch (err) {
     console.log(err)
-    res.redirect('posts')
+    res.redirect('/posts')
+  }
+})
+
+
+
+router.get('/:id', async(req,res)=>{
+  try {
+    const foundPost = await Post.findById(req.params.id)
+      .populate('author')
+      .populate({
+        path: 'comments',
+        populate: { path: 'author' }
+      })
+    res.render('posts/post-details.ejs', {
+      post: foundPost,
+      comments: foundPost.comments,
+      req
+    })
+  } catch (err) {
+    console.log(err)
+    res.redirect('/posts')
+  }
+})
+
+
+router.post('/:id/comments',async(req,res)=>{
+  if(!req.session.user)
+    return res.redirect('/auth/sign-in')
+  try{
+    const postId = req.params.id
+    const comment = await Comment.create({
+      content: req.body.content,
+      author: req.session.user._id,
+      post: postId
+    })
+    await Post.findByIdAndUpdate(postId, {
+      $push: { comments: comment._id }
+    })
+    res.redirect('/posts/',+ postId )
+  } catch (err) {
+    console.log(err)
+    res.redirect('/posts/posts-details',+ req.params.id)
   }
 })
 
