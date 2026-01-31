@@ -81,8 +81,59 @@ h2, h3{
   text-align: center;
   color: #8a3b5a;
 }
+h4 {
+  color: #89254d ;
+}
+ul {
+  color: #2f0a19 ;
+}
 
 .muted {
   font-size: 13px;
   color: #999;
+}
+
+.navbar {
+  background: white;
+  padding: 14px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #c45b85;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #6a2c44;
+}
+
+.nav-links a:hover {
+  color: #c45b85;
+}
+
+.nav-user {
+  font-size: 13px;
+  color: #999;
+}
+
+.nav-btn {
+  background: #f3b6cc;
+  padding: 6px 14px;
+  border-radius: 10px;
+  color: #5a2d3f;
 }

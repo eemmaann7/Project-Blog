@@ -4,21 +4,18 @@ const Comment = require('../models/Comment')
 const User = require('../models/User')
 
 
-// ADD COMMENT
 router.post('/posts/:postId', async(req,res)=>{
   if (!req.session.user)
     return res.redirect('/auth/sign-in')
-
   try {
     const postId = req.params.postId
-    //create comment 
     const comment = await Comment.create({
       content: req.body.content,
       author: req.session.user._id,
       post: postId
     })
     
-    //get post and create the comment 
+    //get the post and create the comment 
     const post = await Post.findById(postId)
     post.comments.push(comment._id)
     await post.save()
@@ -31,7 +28,7 @@ router.post('/posts/:postId', async(req,res)=>{
 })
 
 
-// DELETE COMMENT
+
 router.post('/:commentId/delete/:postId',async(req, res)=>{
   if (!req.session.user)
     return res.redirect('/auth/sign-in')
@@ -39,6 +36,7 @@ router.post('/:commentId/delete/:postId',async(req, res)=>{
     const { commentId, postId } = req.params
     const comment = await Comment.findById(commentId)
 
+    // if the author then delete the comment 
     if(!comment.author.equals(req.session.user._id)) {
       return res.redirect('/posts/' + postId)
     }
@@ -56,42 +54,7 @@ router.post('/:commentId/delete/:postId',async(req, res)=>{
 })
 
 
-// SHOW EDIT FORM
-router.get('/:commentId/edit/:postId', async(req,res)=>{
-  if (!req.session.user)
-    return res.redirect('/auth/sign-in')
-  
-  const { commentId, postId } = req.params
-  const comment = await Comment.findById(commentId)
 
-  if (!comment.author.equals(req.session.user._id)) {
-    return res.redirect('/posts/' + postId)
-  }
-  res.render('comments/edit-comment.ejs', {
-    comment,
-    postId
-  })
-})
-
-
-// UPDATE COMMENT
-router.post('/:commentId/edit/:postId', async(req,res)=>{
-  if (!req.session.user)
-    return res.redirect('/auth/sign-in')
-
-  const { commentId, postId } = req.params
-
-  const comment = await Comment.findById(commentId)
-
-  if (!comment.author.equals(req.session.user._id)) {
-    return res.redirect('/posts/' + postId)
-  }
-
-  comment.content = req.body.content
-  await comment.save()
-
-  res.redirect('/posts/' + postId)
-})
 
 
 
