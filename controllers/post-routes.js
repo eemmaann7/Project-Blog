@@ -93,7 +93,7 @@ router.get('/:id/', async(req,res)=>{
       .populate({
         path: 'comments',
         populate: { path: 'author' }
-      })
+      }) //gets a specific post details 
     res.render('posts/post-details.ejs', {
       post: foundPost,
       comments: foundPost.comments,
