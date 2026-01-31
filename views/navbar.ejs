@@ -1,16 +1,29 @@
 <link rel="stylesheet" href="/css/styles.css">
-<div>
-    <!-- everyone can see -->
-     <a href="/">Home Page</a>
-     <a href="/aboutus">About Us</a>
-     <% if (user){ %>
-        <!-- logged in users can see -->
-         <a href="/posts/new">Create Post</a>
-         <a href="/auth/sign-out">Logout</a>
-         <a href="/posts">All Posts</a>
-         <% } else{ %>
-            <!-- logged out users can see -->
-             <a href="/auth/sign-up">Sign up</a>
-             <a href="/auth/sign-in">Login</a>
-    <% } %>
-</div>
+
+<nav class="navbar">
+
+  <a href="/" class="logo">SoftBlog</a>
+
+
+  <div class="nav-links">
+
+    <!-- everyone -->
+    <a href="/">Home</a>
+    <a href="/aboutus">About</a>
+
+    <% if (user){ %>
+      <!-- logged in -->
+      <a href="/posts">Posts</a>
+      <a href="/posts/new">Create Post</a>
+
+      <span class="nav-user">
+        Hi <%= user.username %>
+      </span>
+      <a href="/auth/sign-out" class="nav-btn">Logout</a>
+    <% } else { %>
+      <!-- logged out -->
+      <a href="/auth/sign-in">Login</a>
+      <a href="/auth/sign-up" class="nav-btn">Sign up</a>
+    <%} %>
+  </div>
+</nav>

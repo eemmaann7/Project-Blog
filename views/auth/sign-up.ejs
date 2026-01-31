@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
-    <%- include('../navbar') %>
+  <%- include('../navbar') %>
+  <div class="container">
+    <div class="post-card auth-card">
     <h1>Create a new account!</h1>
     <form action="/auth/sign-up" method="post">
       <label for="username">Username:</label>
@@ -21,5 +23,7 @@
       <br><br>
       <button type="submit">Sign up</button>
     </form>
+  </div>
+</div>
   </body>
 </html>

@@ -50,3 +50,39 @@ textarea {
   padding: 10px;
   font-family: inherit;
 }
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  font-family: inherit;
+}
+
+label {
+  font-size: 14px;
+  color: #a14f6c;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.auth-card {
+  max-width: 420px;
+  margin: auto;
+}
+
+h1{
+  text-align: center;
+  color: #b35a7c;
+}
+
+h2, h3{
+  text-align: center;
+  color: #8a3b5a;
+}
+
+.muted {
+  font-size: 13px;
+  color: #999;
+}

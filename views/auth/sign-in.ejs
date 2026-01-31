@@ -8,6 +8,8 @@
   </head>
   <body>
     <%- include('../navbar') %>
+    <div class="container">
+      <div class="post-card auth-card">
     <h1>Sign in</h1>
     <form action="/auth/sign-in" method="POST">
       <label for="username">Username:</label>
@@ -18,5 +20,7 @@
       <br><br>
       <button type="submit">Sign in</button>
     </form>
+    </div>
+  </div>
   </body>
 </html>

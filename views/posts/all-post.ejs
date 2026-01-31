@@ -9,16 +9,18 @@
 </head>
 <body>
     <%- include('../navbar') %>
+    <div class="container">
     <h1>All Posts</h1>
-
     <% allPost.forEach((onePost)=>{ %>
-        <p><%= onePost.postTitle %></p>
-        <p>by:<%= onePost.author.username %></p>
+        <div class="post-card">
+        <h2><%= onePost.postTitle %></h2>
+        <p class="muted">by:<%= onePost.author.username %></p>
         <form action="/posts/<%= onePost._id %>/delete" method="POST">
             <button type="submit">Delete</button>
         </form>
         <a href="/posts/<%=onePost._id%>">See Details</a>
+        </div>
     <% }) %>
-
+</div>
 </body>
 </html>
