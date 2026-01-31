@@ -18,7 +18,7 @@ router.post('/posts/:postId', async(req,res)=>{
       post: postId
     })
     
-    //get pot and create the comment 
+    //get post and create the comment 
     const post = await Post.findById(postId)
     post.comments.push(comment._id)
     await post.save()

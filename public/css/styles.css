@@ -1,0 +1,52 @@
+body {
+  background-color: #fdf6f9;
+  font-family: system-ui, sans-serif;
+  color: #444;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.post-card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+}
+
+.comment {
+  background: #fff4f8;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+}
+
+button, .button {
+  background: #f3b6cc;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #5a2d3f;
+  text-decoration: none;
+}
+
+button:hover, .button:hover {
+  background: #eaa1bb;
+}
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-family: inherit;
+}

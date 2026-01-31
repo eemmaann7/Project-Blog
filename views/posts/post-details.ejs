@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Post Details</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
   <%- include('../navbar') %>
+  <div class="container">
+  <div class="post-card">
 
   <h1>Post Details</h1>
 
@@ -22,9 +25,11 @@
 ) { %>
   <a href="/posts/<%= post._id %>/edit">Edit Post</a>
 <% } %>
+<hr>
+</div>
+</div>
 
 
-  <hr>
 
   <h2>Comments</h2>
 
@@ -32,7 +37,7 @@
     <p>No comments yet.</p>
   <% } else { %>
     <% comments.forEach((oneComment) => { %>
-      <div style="margin-bottom:10px;">
+        <div class="comment">
 
         <strong><%= oneComment.author.username %></strong> :
         <%= oneComment.content %>
@@ -42,13 +47,11 @@
           oneComment.author &&
           oneComment.author._id.equals(req.session.user._id)
         ) { %>
-
-          <!-- ✏️ Edit -->
-          <a href="/comments/<%= oneComment._id %>/edit/<%= post._id %>">
+            //edit 
+            <a href="/comments/<%= oneComment._id %>/edit/<%= post._id %>">
             Edit
           </a>
-
-          <!-- 🗑 Delete -->
+          //delete
           <form
             action="/comments/<%= oneComment._id %>/delete/<%= post._id %>"
             method="POST"
